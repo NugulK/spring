@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+	<bean class="com.yedam.app.ioc.Student">
+		<property name="ssn" value="123456789" />
+		<property name="name" value="Kang" />
+		<property name="school" value="HanKook" />
+	</bean>
+	
+	<!-- XML 방식으 DI -->
+	<bean id="speaker" class="com.yedam.app.di.SonySpeaker"/>
+	
+	<!-- 1) 생성자 Injection 
+	<bean class="com.yedam.app.di.SamsungTV">
+		<constructor-arg ref="speaker"/>
+	</bean>-->
+	
+	<!-- 2) Setter Injection -->
+	<bean class="com.yedam.app.di.SamsungTV">
+		<property name="speaker" ref="speaker" />
+	</bean>
+	
+</beans>
