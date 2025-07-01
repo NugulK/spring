@@ -49,6 +49,7 @@ local.properties
 .classpath
 .project
 .settings
+target/
 
 # Code Recommenders
 .recommenders/
