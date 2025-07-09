@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+	<div th:fragment="HeaderFrag" class="container" >
+		<ul class="nav">
+		  <li class="nav-item">
+		    <a class="nav-link active" aria-current="page" th:href="@{/empList}">전체사원조회</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" th:href="@{/empInsert}">사원등록</a>
+		  </li>
+		</ul>
+	</div>
+</html>

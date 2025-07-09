@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{common/layouts/default_layout}"
+	  layout:fragment="Content">
+<body> 
+	<div class="container text-center">
+		<h3>전체 사원조회</h3>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>No.</th>
+					<th>사원번호</th>
+					<th>이름</th>
+					<th>입사일자</th>
+					<th>업무</th>
+					<th>급여</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="info, sts : ${emps}">
+					<!--  반복하고자 하는 태그  -->
+					<!--/*
+					-- 상대 경로 기반
+					<tr th:onclick="|location.href='empInfo?employeeId=${info.employeeId}'|"> 
+					-- 절대 경로 기반 : 링크 표현식
+					<tr th:onclick="|location.href='@{/empInfo(employeeId=${info.employeeId}, lastName=${info.lastName})}'|">
+					*/-->
+					<tr>
+						<td>[[ ${sts.count} ]]</td>
+						<td>[[ ${info.employeeId} ]]</td>
+						<td>[[ ${info.lastName} ]]</td>
+						<!-- /* <td>[[ ${info.hireDate} ]]</td> */ -->
+						<td>[[ ${#dates.format(info.hireDate, 'yyyy년MM월dd일')} ]]</td>
+						<td>[[ ${info.jobId} ]]</td>
+						<td>[[ ${info.salary} ]]</td>
+					</tr>
+				</th:block>
+			
+			</tbody>
+		</table>
+	</div>
+	<script>
+		const context = $('meta[name="ctxPath"]').attr('value');
+		$('tbody > tr').on('click',function(event){
+			let trTag = event.currentTarget;
+			let eid = $(trTag).children().eq(1).text();
+			let url = `${context}/empInfo?employeeId=${eid}`;
+			location.href=url;
+		})
+	</script>
+</body>
+</html>

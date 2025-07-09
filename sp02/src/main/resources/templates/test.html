@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <h1>타임리프 테스트</h1>
+    <!--  thymeleaf, 유일한 태그 -->
+    <!-- /* 타임리프 파서 주석 / -->
+    <th:block th:each="num: ${#numbers.sequence(1,5)}">
+        <p th:text="${num}"></p>
+    </th:block>
+    <hr>
+    <!-- /* 1) th:속성="${...}" */ -->
+    <p th:id="${empInfo.employeeId}"
+    th:name="${empInfo.lastName}"
+    th:text="|employee Info: ${empInfo.employeeId}|"></p>
+    <p>사원 정보: [[ ${empInfo} ]]</p>
+    
+    <!-- /* 2) 제어문 */ -->
+    <th:block th:each="info : ${empList}">
+    	<div th:if="${info.jobId.equals('IT_PROG')}" th:name="${info.jobId}">
+    		<p>[[ ${info.lastName}]]</p>
+    		<p>[[ ${info.email}]]</p>
+    		<p>[[ ${info.hireDate}]]</p>
+    	</div>
+    </th:block>
+    <!-- /* 3) 링크표현식
+    			th:href="@{...}"
+    			th:src="@{...}"
+    			th:action=@{...}"
+     			*/ -->
+    <a th:href="@{/}" th:text="'메인'"></a>
+    <a href="/">메인페이지로</a>
+</body>
+</html>

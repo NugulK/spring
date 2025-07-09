@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{common/layouts/default_layout}"
+	  layout:fragment="Content">
+<body>
+	<div class="container">
+		<!-- th:object => 태그에서 사용할 객체 바인딩 -->
+		<form name="updateForm" th:object="${emp}">
+			<h3>사원 정보 수정</h3>
+			<div>
+				<label for="eid">사원번호</label> <!-- *{...} th:object에 바인딩된 객체의 필드값 --> 
+				<input type="text" id="eid" th:field="*{employeeId}" readonly/>
+			</div>
+			<div>
+				<label for="ename">이름</label> <!-- th:field, id name value 속성을 자동완성 -->
+				<input type="text" id="ename" th:field="*{lastName}"/>
+			</div>
+			<div>
+				<label for="email">이메일</label> 
+				<input type="text" id="email" th:field="*{email}" />
+			</div>
+			<div>
+				<label for="hDate">입사일</label> <!-- 해당 필드가 @DateTimeFormat를 가진 경우 출력포맷 자동변경 -->
+				<input type="date" id="hDate" th:field="*{hireDate}" />
+			</div>
+			<div>
+				<label for="job">업무</label> 
+				<input type="text" id="job" th:field="*{jobId}" />
+			</div>
+			<div>
+				<label for="sal">급여</label> 
+				<input type="number" id="sal"step="0.01" min="0" th:field="*{salary}" />
+			</div>
+			<div>
+				<button type="button" id="updateBtn">저장</button>
+			</div>
+		</form>
+	</div>
+	<script>
+		$('#updateBtn').on('click', updateAjax);
+		
+		function updateAjax(event){
+			// 1) 서버에 보낼 데이터 가져오기
+			let dataObj = getFormData();
+			
+			// 2)AJAX
+			$.ajax('empUpdate', {
+				type : 'post',
+				contentType : 'application/json',
+				data : JSON.stringify(dataObj),
+			})
+			.done(result => {
+				console.log(result);
+			})
+			.fail(err => console.log(err));
+		}
+		
+		function getFormData(){
+			let formAry = $(updateForm).serializeArray();
+			//<input name="lastName" value="Hong"> 
+			// => {name: "lastName", value : "Hong"}
+			console.log(formAry);
+			let formObj = {};
+			$(formAry).each((idx, tag)=>{
+				formObj[tag.name] = tag.value;			
+				// : {"lastName" : "Hong"}
+			})
+			console.log(formObj);
+			return formObj;
+		}
+	</script>
+</body>
+</html>
